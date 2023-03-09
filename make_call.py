@@ -7,9 +7,9 @@ def make_call(to, zip):
     # Find your Account SID and Auth Token at twilio.com/console
     # and set the environment variables. See http://twil.io/secure
     account_sid = 'AC393095068bbebf913fc0ad98f0f1b929'
-    auth_token = '62ceb6dd15058054d5729ae5e165a65f'
+    auth_token = '5d3007cb602ac9e871152c5de47e21da'
     client = Client(account_sid, auth_token)
-    ngronk_link = "https://2937-2601-189-8000-5006-fd87-aaf7-9aed-903f.ngrok.io"
+    ngronk_link = "https://e92e-2601-189-8000-5006-fd87-aaf7-9aed-903f.ngrok.io"
 
     action = f"{ngronk_link}/choose_option"
     instructions = f''' 
