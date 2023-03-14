@@ -35,7 +35,7 @@ summaries = [
     '''A Washington, DC, police sergeant who fatally shot a man found unconscious at the wheel of a car has been charged with murder, according to a federal indictment unsealed on Tuesday. At the scene of the incident, the department has said, officers found Mr. Gilmore with his foot on the brake pedal of a running vehicle with the handgun visible in his waistband. In a statement on Tuesday, Matthew M. Graves, the United States attorney for the District of Columbia, said that criminal charges are not appropriate in the overwhelming majority of cases where officers use deadly force.'''
 ]
 
-ngronk_link = "https://e92e-2601-189-8000-5006-fd87-aaf7-9aed-903f.ngrok.io"
+ngronk_link = "https://8747-73-159-114-175.ngrok.io"
 
 @app.route("/answer", methods=['GET', 'POST'])
 def answer_call():
