@@ -26,7 +26,7 @@ app.post('/answer', (req, res) => {
     console.log("From Number:", req.body.From);
     console.log("From ZIP::", req.body.FromZip);
 
-    makeCall(req.body.From, req.body.FromZip)
+    makeCall(req.body.From, req.body.FromZip);
 
     res.send(resp.toString());
 });
