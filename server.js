@@ -2,6 +2,7 @@ require('dotenv').config();
 const http = require('http');
 const express = require('express');
 const twilio = require('twilio');
+const urlencoded = require('body-parser').urlencoded;
 
 const accountSid   = process.env.ACCOUNT_SID;
 const authToken    = process.env.AUTH_TOKEN;
@@ -13,12 +14,16 @@ const client = twilio(accountSid, authToken);
 // Initialize Express web server
 const app = express();
 
+
+// Parse incoming POST params with Express middleware
+app.use(urlencoded({ extended: false }));
+
 app.post('/answer', (req, res) => {
     let resp = new twilio.twiml.VoiceResponse();
     resp.reject();
 
-    console.log("From Number:", req.values['From']);
-    console.log("From ZIP::", req.values['FromZip']);
+    console.log("From Number:", req.body.From);
+    console.log("From ZIP::", req.body.FromZip);
 
     // make_call(request.values['From'], request.values['FromZip'])
 
@@ -58,7 +63,7 @@ app.post('/answer', (req, res) => {
 
 // start the server
 http.createServer(app).listen(24685, () => {
-    console.log('Express server listening on port 3000');
+    console.log('Express server listening on port 24685');
 });
 
 // Make the initial outgoing call
