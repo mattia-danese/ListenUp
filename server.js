@@ -4,6 +4,8 @@ const express = require('express');
 const twilio = require('twilio');
 const urlencoded = require('body-parser').urlencoded;
 
+const { makeCall } = require('./make_call.js');
+
 const accountSid   = process.env.ACCOUNT_SID;
 const authToken    = process.env.AUTH_TOKEN;
 const server       = process.env.SERVER;
@@ -13,7 +15,6 @@ const client = twilio(accountSid, authToken);
 
 // Initialize Express web server
 const app = express();
-
 
 // Parse incoming POST params with Express middleware
 app.use(urlencoded({ extended: false }));
@@ -25,7 +26,7 @@ app.post('/answer', (req, res) => {
     console.log("From Number:", req.body.From);
     console.log("From ZIP::", req.body.FromZip);
 
-    // make_call(request.values['From'], request.values['FromZip'])
+    makeCall(req.body.From, req.body.FromZip)
 
     res.send(resp.toString());
 });
@@ -66,11 +67,3 @@ http.createServer(app).listen(24685, () => {
     console.log('Express server listening on port 24685');
 });
 
-// Make the initial outgoing call
-// client.calls.create({
-//   url: ngrok_url+'/make-call',
-//   to: testPhone,
-//   from: twilioPhone
-// })
-// .then(call => console.log(call.sid))
-// .catch(error => console.log(error));
