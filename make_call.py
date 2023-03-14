@@ -11,11 +11,11 @@ def make_call(to, zip):
     load_dotenv()
     account_sid = os.environ['ACCOUNT_SID']
     auth_token = os.environ['AUTH_TOKEN']
+    server = os.environ['SERVER']
     
     client = Client(account_sid, auth_token)
-    ngronk_link = "http://silicon.mwaldrich.io:24685"
 
-    action = f"{ngronk_link}/choose_option"
+    action = f"{server}/choose_option"
     instructions = f''' 
     <Response>
         <Say voice="alice">Thank you for calling Global News.</Say>

@@ -2,6 +2,8 @@ from flask import Flask
 from flask import request
 from twilio.twiml.voice_response import VoiceResponse, Gather
 from string import punctuation
+from dotenv import load_dotenv
+import os
 
 from make_call import make_call
 
@@ -35,7 +37,8 @@ summaries = [
     '''A Washington, DC, police sergeant who fatally shot a man found unconscious at the wheel of a car has been charged with murder, according to a federal indictment unsealed on Tuesday. At the scene of the incident, the department has said, officers found Mr. Gilmore with his foot on the brake pedal of a running vehicle with the handgun visible in his waistband. In a statement on Tuesday, Matthew M. Graves, the United States attorney for the District of Columbia, said that criminal charges are not appropriate in the overwhelming majority of cases where officers use deadly force.'''
 ]
 
-ngronk_link = "http://silicon.mwaldrich.io:24685"
+load_dotenv()
+server = os.environ['SERVER']
 
 @app.route("/answer", methods=['GET', 'POST'])
 def answer_call():
@@ -58,7 +61,7 @@ def choose_options(previous_chosen_option = None):
     print("Number Pressed:", option_chosen)
 
     if option_chosen == '4' or option_chosen not in ['1','2','3']:
-        action = f"{ngronk_link}/choose_option"
+        action = f"{server}/choose_option"
         
         gather = Gather(action=action, method='GET')
         gather.say("Please select 1 for trending local news, 2 for trending world news, 3 if you have a specific query, or 4 to repeat these options.")
@@ -75,7 +78,7 @@ def choose_options(previous_chosen_option = None):
         # TODO: getting headlines
         # headlines = ["banana", "apple", "orange"]
 
-        gather = Gather(action=f"{ngronk_link}/read_article", method='GET', finishOnKey='')
+        gather = Gather(action=f"{server}/read_article", method='GET', finishOnKey='')
         for idx, headline in enumerate(headlines):
             gather.say(f"Press {idx} to listen to {headline}")
             gather.pause(1)
@@ -94,7 +97,7 @@ def choose_options(previous_chosen_option = None):
         # TODO: getting headlines
         # headlines = ["banana", "apple", "orange"]
 
-        gather = Gather(action=f"{ngronk_link}/read_article", method='GET', finishOnKey='')
+        gather = Gather(action=f"{server}/read_article", method='GET', finishOnKey='')
         for idx, headline in enumerate(headlines):
             gather.say(f"Press {idx} to listen to {headline}")
             gather.pause(1)
@@ -107,7 +110,7 @@ def choose_options(previous_chosen_option = None):
     if option_chosen == '3':
         print("Specific Query")
         
-        gather = Gather(input="speech", action=f"{ngronk_link}/specific_query", method='GET')
+        gather = Gather(input="speech", action=f"{server}/specific_query", method='GET')
         gather.say("What is your Specific Query?")
         resp.append(gather)
 
@@ -132,7 +135,7 @@ def specific_query():
     resp.pause(1)
     resp.say(query)
 
-    gather = Gather(action=f"{ngronk_link}/query_check", method='GET')
+    gather = Gather(action=f"{server}/query_check", method='GET')
     gather.say("Please press 1 to confirm this is correct or press 2 to say a new query")
     resp.append(gather)
 
@@ -177,14 +180,14 @@ def query_check():
         resp.say("Here are the headlines we found on google")
         resp.pause(1)
 
-        gather = Gather(action=f"{ngronk_link}/read_article", method='GET', finishOnKey='')
+        gather = Gather(action=f"{server}/read_article", method='GET', finishOnKey='')
         for idx, headline in enumerate(headlines):
             gather.say(f"Press {idx} to listen to {headline}")
             gather.pause(1)
         gather.say("Press the pound key to repeat these options")
 
     if num == 2 or num not in [1,2]:
-        gather = Gather(input="speech", action=f"{ngronk_link}/specific_query")
+        gather = Gather(input="speech", action=f"{server}/specific_query")
         gather.say("What is your Specific Query?")
         resp.append(gather)
 
