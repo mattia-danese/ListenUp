@@ -13,7 +13,7 @@ def make_call(to, zip):
     auth_token = os.environ['AUTH_TOKEN']
     
     client = Client(account_sid, auth_token)
-    ngronk_link = "https://8747-73-159-114-175.ngrok.io"
+    ngronk_link = "http://silicon.mwaldrich.io:24685"
 
     action = f"{ngronk_link}/choose_option"
     instructions = f''' 
