@@ -1,5 +1,4 @@
 # ListenUp
 How to run:
-- Clone repo
-- Request `.env` file
+- 'ssh listenup@silicon.mwaldrich.io'
 - Run `python3 answer_phone.py`
