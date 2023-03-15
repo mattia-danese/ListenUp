@@ -18,9 +18,10 @@ function makeCall(to, zip){
     `
     // Make the initial outgoing call
     client.calls.create({
-      url: server+'/choose_option',
+    //   url: server+'/choose_option',
       to: to,
-      from: "+18449504572"
+      from: "+18449504572",
+      twiml: instructions,
     })
     .then(call => console.log(call.sid))
     .catch(error => console.log(error));

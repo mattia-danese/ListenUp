@@ -57,7 +57,7 @@ app.post('/answer', (req, res) => {
     res.send(resp.toString());
 });
 
-app.post('/make-call', (req, res) => {
+app.post('/choose_option', (req, res) => {
     var option_chosen = req.body.Digits;
     let resp = new twilio.twiml.VoiceResponse();
 
@@ -125,10 +125,6 @@ app.post('/make-call', (req, res) => {
         resp.gather({
             action: `${server}/specific_query`
         });
-        
-        gather = Gather(input="speech", action=f"{server}/specific_query", method='GET')
-        gather.say("What is your Specific Query?")
-        resp.append(gather)
 
         res.send(resp.toString());
         return;
