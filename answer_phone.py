@@ -40,6 +40,9 @@ summaries = [
 load_dotenv()
 server = os.environ['SERVER']
 
+
+# Answers the initial phone call.
+# Rejects the call and makes an outgoing call.
 @app.route("/answer", methods=['GET', 'POST'])
 def answer_call():
     resp = VoiceResponse()
@@ -52,9 +55,11 @@ def answer_call():
 
     return str(resp)
 
+# 
 @app.route("/choose_option", methods=['GET', 'POST'])
 def choose_options(previous_chosen_option = None):
     global option_chosen
+    print("Request: " + str(request))
     option_chosen = request.values['Digits'] if previous_chosen_option is None else previous_chosen_option
     resp = VoiceResponse()
 
@@ -141,6 +146,8 @@ def specific_query():
 
     return str(resp)
 
+
+# Actually read an article, given the ID number.
 @app.route("/read_article", methods=['GET', 'POST'])
 def read_article():
     print("in read article")
