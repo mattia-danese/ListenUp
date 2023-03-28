@@ -58,6 +58,7 @@ def answer_call():
 # 
 @app.route("/choose_option", methods=['GET', 'POST'])
 def choose_options(previous_chosen_option = None):
+    print("Called: " + str(request.values['Called']))
     global option_chosen
     print("Request: " + str(dir(request)))
     print("Request values: " + str(request.values))
@@ -126,6 +127,7 @@ def choose_options(previous_chosen_option = None):
 
 @app.route("/specific_query", methods=['GET', 'POST'])
 def specific_query(): 
+    print("Called: " + str(request.values['Called']))
     global query
     query = request.values['SpeechResult']
 
@@ -151,6 +153,7 @@ def specific_query():
 # Actually read an article, given the ID number.
 @app.route("/read_article", methods=['GET', 'POST'])
 def read_article():
+    print("Called: " + str(request.values['Called']))
     print("in read article")
 
     num = request.values['Digits']
@@ -171,10 +174,12 @@ def read_article():
 
 @app.route("/query_check", methods=['GET', 'POST'])
 def query_check():
+    print("Called: " + str(request.values['Called']))
     print("in query check")
 
     num = int(request.values['Digits'])
     resp = VoiceResponse()
+
 
     if num == 1:
         resp.say("Searching google for")
