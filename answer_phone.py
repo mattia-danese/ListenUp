@@ -60,6 +60,7 @@ def answer_call():
 def choose_options(previous_chosen_option = None):
     global option_chosen
     print("Request: " + str(dir(request)))
+    print("Request values: " + str(dir(request.values)))
     option_chosen = request.values['Digits'] if previous_chosen_option is None else previous_chosen_option
     resp = VoiceResponse()
 
