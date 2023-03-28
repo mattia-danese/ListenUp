@@ -1,3 +1,32 @@
+#
+# To-Do: Mark
+#
+# Integration with news-please:
+#
+# For the first stage of integration, we will have a directory full of json files
+# pulled from news-please. There will be no Google search or dynamic fetching 
+# for this initial stage.
+#
+# 1. On startup, our application will index the JSON files into an array,
+#    `articles`, with the JSON content stored under each index.
+# 
+# 2. "Trending world news" and "Trending global news" will be replaced
+#    with "Trending news", which is just the most recent 10 articles.
+#
+# 3. Article selection for trending news will remain the same.
+#
+# 4. For searching, the search term is split into words, and
+#    article MAIN TEXT is searched for those words. Matching
+#    articles will be ranked according to relevance. That list
+#    of matched articles will be stored under a new variable,
+#    `searches`, which is a map from: 
+#        phone # -> list of matched articles
+#
+#    This way, when the user actually makes a selection (1-10),
+#    the system can lookup what the searched articles were and
+#    read the correct one.
+
+
 from flask import Flask
 from flask import request
 from twilio.twiml.voice_response import VoiceResponse, Gather
