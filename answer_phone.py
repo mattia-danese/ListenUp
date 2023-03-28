@@ -3,7 +3,6 @@ from flask import request
 from twilio.twiml.voice_response import VoiceResponse, Gather
 from string import punctuation
 from dotenv import load_dotenv
-from pprint import pprint
 import os
 
 from make_call import make_call
@@ -60,8 +59,7 @@ def answer_call():
 @app.route("/choose_option", methods=['GET', 'POST'])
 def choose_options(previous_chosen_option = None):
     global option_chosen
-    print("Request:")
-    pprint(request)
+    print("Request: " + str(dir(request)))
     option_chosen = request.values['Digits'] if previous_chosen_option is None else previous_chosen_option
     resp = VoiceResponse()
 
