@@ -19,8 +19,8 @@ def make_call(to, zip):
     instructions = f''' 
     <Response>
         <Say voice="alice">Thank you for calling Global News.</Say>
-        <Gather action="{action}" numDigits="3" timeout="10">
-            <Say voice="alice">Please select 1 for trending local news, 2 for trending world news, 3 if you have a specific query, or 4 to repeat these options.</Say>
+        <Gather action="{action}" numDigits="1" timeout="10">
+            <Say voice="alice">Please select 1 for trending news, 2 if you have a specific query, or 3 to repeat these options.</Say>
         </Gather>
     </Response>
     '''
