@@ -38,7 +38,7 @@
 
 from flask import Flask
 from flask import request
-from twilio.twiml.voice_response import VoiceResponse, Gather
+from twilio.twiml.voice_response import VoiceResponse, Gather, Redirect
 from string import punctuation
 from dotenv import load_dotenv
 import os
@@ -51,6 +51,7 @@ from make_call import make_call
 app = Flask(__name__)
 number = None
 ZIP = None
+query = None
 
 # Use NYTimes articles for now
 articles = scan_articles("./nytimes")
@@ -91,6 +92,7 @@ def choose_options(previous_chosen_option = None):
         gather = Gather(action=action, numDigits=1, method='GET')
         gather.say("Please select 1 for trending news, 2 if you have a specific query, or 3 to repeat these options.")
         resp.append(gather)
+        resp.redirect(f"{server}/choose_option?Digits=Timeout", method="GET")
 
         return str(resp)
 
@@ -104,23 +106,26 @@ def choose_options(previous_chosen_option = None):
         # headlines = ["banana", "apple", "orange"]
 
         gather = Gather(action=f"{server}/read_article", numDigits=1, method='GET', finishOnKey='')
-        print("About to enumerate articles. articles[:5]: " + str(articles[:5]))
-        #for idx, article in enumerate(articles[:5]):
         for idx, article in enumerate(articles[:5]):
             gather.say(f"Press {idx} to listen to {article['title']}")
             gather.pause(1)
         gather.say("Press the pound key to repeat these options")
 
         resp.append(gather)
+        resp.redirect(f"{server}/choose_option?Digits=1", method="GET")
 
         return str(resp)
 
     if option_chosen == '2':
         print("Specific Query")
         
-        gather = Gather(input="speech", action=f"{server}/specific_query", timeout=3, method='GET')
+        speech_timeout = 3
+        gather = Gather(input="speech", action=f"{server}/specific_query", timeout=speech_timeout, method='GET')
         gather.say("What is your Specific Query?")
+        #gather.pause(speech_timeout)
         resp.append(gather)
+        resp.say("Sorry, we didn't hear that.")
+        resp.redirect(f"{server}/choose_option?Digits=2", method='GET')
 
         return str(resp)
 
@@ -147,6 +152,7 @@ def specific_query():
     gather = Gather(action=f"{server}/query_check", numDigits=1, method='GET')
     gather.say("Please press 1 to confirm this is correct or press 2 to say a new query")
     resp.append(gather)
+    resp.redirect(f"{server}/choose_option?Digits=2")
 
     return str(resp)
 
@@ -171,13 +177,16 @@ def read_article():
     else:
         text_to_read = query_articles(query, articles)[num]['maintext']
     
+    #gather = Gather(action=f"{server}/choose_option", numDigits=1, method='GET')
     resp = VoiceResponse()
-    resp.say(f"Reading article {num}")
+    resp.say(f"Reading article {num}. To go back at any time, press any key.")
 
     # TODO: Read Article
+    gather = Gather(action=f"{server}/choose_option", numDigits=1, method='GET', timeout=-1)
     query = None
-    resp.pause(1)
-    resp.say(text_to_read)
+    #gather.pause(1)
+    gather.say(text_to_read)
+    resp.append(gather)
 
     return str(resp)
 
@@ -210,9 +219,10 @@ def query_check():
         resp.append(gather)
 
     if num == 2 or num not in [1,2]:
-        gather = Gather(input="speech", action=f"{server}/specific_query")
-        gather.say("What is your Specific Query?")
-        resp.append(gather)
+        #gather = Gather(input="speech", action=f"{server}/specific_query")
+        #gather.say("What is your Specific Query?")
+        #resp.append(gather)
+        return choose_options('2')
 
     return str(resp)
 

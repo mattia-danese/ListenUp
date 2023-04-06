@@ -32,7 +32,7 @@ def scan_articles(articles_dir):
     
 
     articles.reverse()
-    print("Articles JSON array: " + str(articles[0]))
+    #print("Articles JSON array: " + str(articles[0]))
 
     return articles
 
@@ -40,7 +40,7 @@ def scan_articles(articles_dir):
 # that are relevant to the query.
 def query_articles(query, articles):
 
-    print("About to query articles: " + str(articles[:5]))
+    #print("About to query articles: " + str(articles[:5]))
 
     def query_matches_article(article):
         # Split query up into words
