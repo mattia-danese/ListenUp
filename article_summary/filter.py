@@ -7,7 +7,7 @@
 # Example: "Cats like to play. They also like to eat". The second sentence here refers to the first.
 # Therefore it should be omitted.
 
-import extractor
+from . import extractor
 from sys import argv
 
 
@@ -20,7 +20,7 @@ def print_usage():
 
 
 def get_transition_phrases():
-    lines = open("word_lists/transition_phrases.txt").readlines()
+    lines = open("article_summary/word_lists/transition_phrases.txt").readlines()
     result = []
     for line in lines:
         result.append(line.lstrip().rstrip())

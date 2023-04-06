@@ -41,6 +41,7 @@ from flask import request
 from twilio.twiml.voice_response import VoiceResponse, Gather, Redirect
 from string import punctuation
 from dotenv import load_dotenv
+from summarize import summarize
 import os
 import json
 
@@ -55,6 +56,10 @@ query = None
 
 # Use NYTimes articles for now
 articles = scan_articles("./nytimes")
+
+# Summarize articles
+for article in articles:
+    summarize(article['maintext'])
 
 load_dotenv()
 server = os.environ['SERVER']

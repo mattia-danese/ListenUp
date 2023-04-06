@@ -80,7 +80,7 @@ def remove_blanks(sentences):
 def fix_broken_sentences(sentences):
     # Combine sentences in a list where periods from abbreviations where
     # mistaken for the end of a sentence.
-    file = open("word_lists/abbreviations.txt")
+    file = open("article_summary/word_lists/abbreviations.txt")
     abbreviations = str(file.read()).split("\n")
     file.close()
 
@@ -108,7 +108,7 @@ def fix_broken_sentences(sentences):
 
 def convert_abbreviations(string):
     # Remove all periods in all multi period abbreviations. Example: Y.M.C.A -> YMCA
-    file = open("word_lists/abbreviations_multi.txt")
+    file = open("article_summary/word_lists/abbreviations_multi.txt")
     abbreviations = str(file.read()).split("\n")
     file.close()
     new_string = string

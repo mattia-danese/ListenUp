@@ -1,13 +1,13 @@
 # Tool to count and score sentences and words.
 
-import parser
-import extractor
+from . import parser
+from . import extractor
 from sys import argv
 
 
 def get_word_scores(all_words):
     # Return a dictionary where the key is the word and the value is its count.
-    file = open("word_lists/words_to_ignore.txt")
+    file = open("article_summary/word_lists/words_to_ignore.txt")
     words_to_ignore = file.read().split("\n")
     file.close()
     dictionary = {}

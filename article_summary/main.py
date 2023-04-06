@@ -1,8 +1,8 @@
 # The highest level code that brings everything together.
 
-import extractor
-import filter
-import scoring
+from . import extractor
+from . import filter
+from . import scoring
 from sys import argv
 
 
@@ -42,7 +42,7 @@ def summarize(filename, num_of_sentences):
     for sentence in top_sentences:
         summary += sentence + " "
     summary = summary[:-1]
-    print(summary)
+    return summary
 
 
 if __name__ == '__main__':

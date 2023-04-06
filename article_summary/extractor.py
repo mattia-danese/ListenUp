@@ -1,7 +1,7 @@
 # Tool to extract sentences & words from a file.
 
 from sys import argv
-import parser
+from . import parser
 
 
 def get_sentences(file_name):
